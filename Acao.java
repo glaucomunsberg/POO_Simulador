@@ -1,3 +1,5 @@
+package trabalhoSimulador;
+
 
 /**
  * Acao é a classe que recebe e manipula uma acao
@@ -23,6 +25,13 @@ public class Acao
 		descricao = "";
 		pacote = new Object();
 	}
+	
+	public Acao(Acao acao)
+	{
+		this.setDescricao( acao.getDescricao() );
+		this.setTime( acao.getTime() );
+		this.setPacote( acao.getPacote() );
+	}
 
 	public Acao(int time)
 	{
@@ -43,21 +52,42 @@ public class Acao
 		this.setDescricao(descricao);
 	}
 	
+	/**
+	 * retorna o tempo de execução
+	 * 	deste objeto manupulado em
+	 * 	segundos
+	 * @return int time
+	 */
 	public int getTime()
 	{
 		return this.time;
 	}
 	
+	/**
+	 * Adiciona o tempo de execução
+	 * 	medidos em segundos
+	 * @param int time
+	 */
 	public void setTime(int time)
 	{
 		this.time = time;
 	}
 	
+	/**
+	 * Retorna a descricao do objeto
+	 * 	que está sendo manipulado
+	 * @return String descricao
+	 */
 	public String getDescricao()
 	{
 		return this.descricao;
 	}
 	
+	/**
+	 * Adiciona a descricao do objeto
+	 * 	está sendo manipulado
+	 * @param String descricao
+	 */
 	public void setDescricao(String descricao)
 	{
 		this.descricao = descricao;
