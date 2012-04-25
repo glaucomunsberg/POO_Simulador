@@ -28,7 +28,7 @@ public abstract class Simulador
 				this.executarAcao(tempAcao); //deve geral algo segundo o retorno
 				//Sei lá como funciona depois... threads?!
 			}
-			'
+			
 			time--;
 		}while(time != 0 );
 	}
