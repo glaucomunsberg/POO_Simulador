@@ -1,4 +1,4 @@
-
+package Simulation;
 
 public class Relogio {
     private static final Relogio relogio = new Relogio();
