@@ -1,5 +1,5 @@
 package Simulation;
-
+import java.util.Scanner;
 
 public class Simulador {
     
@@ -11,6 +11,16 @@ public class Simulador {
      * 	pelo simulador
      * @return ListaDeAcoes
      */
+    protected Scanner leitor;
+    public Simulador()
+    {
+        leitor = new Scanner(System.in);
+        /**
+         * Primeira leitura se destina ao maior número de PC's suportado
+         */
+        Estatistica statitic = new Estatistica(leitor.nextInt());
+    }
+    
     public static ListaDeAcoes carregarListaDeSimulacao(){
         /* Alterar */
         ListaDeAcoes temp = new ListaDeAcoes();

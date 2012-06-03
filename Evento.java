@@ -1,5 +1,3 @@
-
-
 public class Evento {
     protected double data;
     protected double duracao;

@@ -8,6 +8,7 @@ public class Estatistica {
      */
     public Estatistica(int numDeComputadores)
     {
+        
     }
     
     /**

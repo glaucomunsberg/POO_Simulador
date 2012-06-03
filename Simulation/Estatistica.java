@@ -59,6 +59,21 @@ public class Estatistica {
     */
    public static void finalizar()
    {
-       
+       int pc=1;
+       System.out.printf("*******************************************************\n");
+       System.out.printf("*                      Relatório                      *\n");
+       System.out.printf("*******************************************************\n");
+       for(int ip =0; ip < numeroDeSucesso.length; ip++)
+       {
+           System.out.printf("*Computador IP %d                                      *\n", pc);
+           System.out.printf("* Erros: %d                                            *\n",numeroDeErros[ip]);
+           System.out.printf("* Sucesso: %d                                          *\n",numeroDeSucesso[ip]);
+           System.out.printf("* Alerta: %d                                           *\n",numeroDeMensagens[ip]);
+           if(ip+1 < numeroDeSucesso.length )
+                System.out.printf("-------------------------------------------------------\n");
+       }
+       System.out.printf("*******************************************************\n");
+       System.out.printf("*Total de mensagens: %d\n                              *\n",totalDeEventos);
+       System.out.printf("*******************************************************\n");
    }
 }
