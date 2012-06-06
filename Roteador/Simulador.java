@@ -1,6 +1,4 @@
-
-
-
+package Roteador;
 public class Simulador {
     
     /**
@@ -12,9 +10,24 @@ public class Simulador {
      * @return ListaDeAcoes
      */
     public static ListaDeAcoes carregarListaDeSimulacao(){
-        /* Alterar */
         ListaDeAcoes temp = new ListaDeAcoes();
+        String comando;
         
+        /**
+         *  Carrega os primeiros comandos para preencher a lista
+         *  passa diretamente uma string para a lista processar 
+         *  e criar os eventos, até que seja inserido um exit
+         */
+        
+        do
+        {
+            comando = Estatistica.leitor.nextLine();
+            if( !comando.equals("exit") )
+            {
+                temp.setAcaoPorComando(comando);//garante que os comandos são em minusculas
+            }
+
+        }while( !comando.equals("exit") );
         return temp;
     }
 	
@@ -25,7 +38,7 @@ public class Simulador {
      * @return Boolean {true - se executou com sucesso | false - se não conseguiu executar }
      */
     public static boolean executarAcao(Evento acao){
-        /* Alterar */
+        acao.execucao();
         return true;
     }
     
@@ -33,27 +46,40 @@ public class Simulador {
      * Execução de todas as ações
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public void simular()
+    {  
         Relogio relogio = Relogio.getRelogio();
-        Evento tempAcao;
+        Estatistica estatistica = new Estatistica();  
         ListaDeAcoes lista = carregarListaDeSimulacao();
+        Evento tempAcao;
         
-	if(lista == null) {
-            System.out.printf("Houve um erro ao carregar as ações. Vamos abortar");
+        if(lista == null) {
+            System.out.printf("Ooops! não tem mais nada na fila");
             System.exit(0);
-	}
-		
-	while( !lista.isEmpty() ){
+        }
+
+        while( !lista.isEmpty() ){
             tempAcao = lista.getAcao();		
             
             if(tempAcao != null){
 		if (executarAcao(tempAcao)){
-                    relogio.increaseTime(tempAcao.getDuracao());
-                    lista.setAcao(tempAcao.gerarProximo());
+                    Relogio.increaseTime(tempAcao.getDuracao());
+                    lista.setAcao(tempAcao.gerarProximo(Estatistica.getTamanhoMaximoPacote()));
                 } else {
                     /* Alterar */
                 }
             }
         }
+    }
+    
+    public void finalizar()
+    {
+        //Estatistica.finalizar();
+    }
+    
+    public static void main(String[] args) {
+        Simulador simula = new Simulador();
+        simula.simular();
+        simula.finalizar();
     }
 }

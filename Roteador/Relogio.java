@@ -1,4 +1,6 @@
-package Simulation;
+package Roteador;
+
+
 
 public class Relogio {
     private static final Relogio relogio = new Relogio();
@@ -12,7 +14,7 @@ public class Relogio {
         return relogio;
     }
     
-    public void increaseTime(double newTime){
+    public static void increaseTime(double newTime){
         time += newTime;
     }
     

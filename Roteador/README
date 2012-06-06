@@ -1,0 +1,33 @@
+O Rodiador contém modificações drasticas sobre o funcionamento pelo Simulation
+Abaixo algumas modificações na sua extrutura:
+    - O Evento agora é único, ou seja, existe apenas um tipo de evento que carrega o pacote
+        para ser manipulado, neste caso cada pacote consegue manipular-se a si mesmo
+    - Cada evento, se for maior que o tamanho máximo do pacote, então esse será processado
+        e gerará um novo evento com o restante do pacote ( evento.gerarProximo() ), 
+        até que não gere mais pacotes
+    - Os comandos de "tipos" de pacote agora é único, sendo assim:
+        <ip origem> <ip destino>
+                ou
+        <command> <ip destinho>
+
+        Comandos e Ip's
+            Comandos
+                     - L <127>.<1-255>.<0-255>.<0-255>
+                        Liga Computador
+                        -> 0.0.0.1 <127>.<0-255>.<0-255>.<0-255>
+
+                     - D <127>.<1-255>.<0-255>.<0-255>
+                        Desliga Computador
+                        -> 0.0.0.2 <127>.<0-255>.<0-255>.<0-255>
+
+                     - Ping <1-255>.<0-255>.<0-255>.<0-255>
+                        Verifica se o computador está disponível 
+                        -> 0.0.0.3 <127>.<0-255>.<0-255>.<0-255>
+            IP
+                Internet
+                     <0-126,128-255>.<0-255>.<0-255>.<0-255>
+                Intranet
+                        <127>.<0-255>.<0-255>.<0-255>
+     - A classe de Estatistica agora assume um papel mais "estatístico", sendo assim é responsável
+        por informações como o tamanho máximo do pacote, chance de quebrar o pacote e etc. Bem como
+        gerenciar mensagens de erros e etc.
