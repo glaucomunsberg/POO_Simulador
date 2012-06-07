@@ -1,4 +1,4 @@
-O Rodiador contém modificações drasticas sobre o funcionamento pelo Simulation
+O Roteador contém modificações drasticas sobre o funcionamento pelo Simulation
 Abaixo algumas modificações na sua extrutura:
     - O Evento agora é único, ou seja, existe apenas um tipo de evento que carrega o pacote
         para ser manipulado, neste caso cada pacote consegue manipular-se a si mesmo

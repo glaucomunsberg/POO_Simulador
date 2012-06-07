@@ -1,0 +1,25 @@
+<nº de pcs>,<velocidade internet>,<velocidade interna>,<chance erro>,<chance desligado>,<tamanho máximo da pacotes>,<desvio padrão>
+<lista - separada por enters>
+
+Comandos:
+        <ip origin>, <ip Destino>, <tamanho>
+        <commands> <ip Destino>
+	
+        Comandos e Ip's
+            Comandos
+                     - L <127>.<1-255>.<0-255>.<0-255>
+                        Liga Computador
+                          -> 0.0.0.1 <127>.<0-255>.<0-255>.<0-255>
+
+                     - D <127>.<1-255>.<0-255>.<0-255>
+                        Desliga Computador
+                          -> 0.0.0.2 <127>.<0-255>.<0-255>.<0-255>
+
+                     - Ping <1-255>.<0-255>.<0-255>.<0-255>
+                        Verifica se o computador está disponível 
+                          -> 0.0.0.3 <127>.<0-255>.<0-255>.<0-255>
+            IP
+                Internet
+                     <0-126,128-255>.<0-255>.<0-255>.<0-255>
+                Intranet
+                        <127>.<0-255>.<0-255>.<0-255>
