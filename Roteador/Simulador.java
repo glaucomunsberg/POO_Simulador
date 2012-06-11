@@ -1,5 +1,16 @@
+/**
+ *  Gataway padrão 127.1.1.0
+ *  Ip's Internos 127.1.1.x | 0 > x < 5 
+ * 
+ */ 
 package Roteador;
-public class Simulador {
+
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Simulador extends JPanel {
     
     /**
      * O método deve carregar a lista de ações,
@@ -7,7 +18,7 @@ public class Simulador {
      * 	acoes e as organizar de forma a adicioná-las
      * 	a lista "listaDeAcoes" para ser executada
      * 	pelo simulador
-     * @return ListaDeAcoes
+     *  @return ListaDeAcoes
      */
     public static ListaDeAcoes carregarListaDeSimulacao(){
         ListaDeAcoes temp = new ListaDeAcoes();
@@ -57,14 +68,14 @@ public class Simulador {
             System.out.printf("Ooops! não tem mais nada na fila");
             System.exit(0);
         }
-
+        
         while( !lista.isEmpty() ){
             tempAcao = lista.getAcao();		
             
             if(tempAcao != null){
 		if (executarAcao(tempAcao)){
                     Relogio.increaseTime(tempAcao.getDuracao());
-                    lista.setAcao(tempAcao.gerarProximo(Estatistica.getTamanhoMaximoPacote()));
+                    lista.setAcao(tempAcao.gerarProximo());
                 } else {
                     /* Alterar */
                 }
@@ -74,7 +85,7 @@ public class Simulador {
     
     public void finalizar()
     {
-        //Estatistica.finalizar();
+        Estatistica.finalizar();
     }
     
     public static void main(String[] args) {

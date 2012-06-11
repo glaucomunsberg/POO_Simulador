@@ -1,3 +1,8 @@
+/**
+ * A classe Estatisca tem o propósito de fazer o intermediário entre a classe Simulador
+ *  e evento quanto se trata de Mensagens e estatistica
+ */
+
 package Roteador;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,68 +25,86 @@ public class Estatistica {
     
     
     /**
-     * Contem todas as informações necessárias para os eventos e do próprio Simulador
-     * 
-     * @param int numDeComputadores 
+     * Construtor padrão que faz a leitura dos parametros que servirão de base
+     *  para a execução do simulador
      */
-    
     public Estatistica()
     {
         leitor = new Scanner(System.in);
         String comandosDeConfig = leitor.nextLine();
-        String[] config = comandosDeConfig.split(",");
-        switch(config.length)
+        
+           /* Apos fazer a leitura e dividir a string em substrins separando-as pelas virgulas
+            *  então manda para o switch fazer as conversões e atribuiçãoes, caso não seja passado
+            *   parametros então este terá valores padrões
+            */
+        
+        if( comandosDeConfig != null )
         {
-            case 1:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                break;
-            case 2:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                break;
-            case 3:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
-                break;
-            case 4:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
-                chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
-                break;
-            case 5:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
-                chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
-                chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
-                break;
-            case 6:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
-                chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
-                chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
-                tamanhoMaximoPacote = Double.parseDouble( String.format("%s", config[5] ) );
-                break;
-            case 7:
-                numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
-                velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
-                velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
-                chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
-                chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
-                tamanhoMaximoPacote = Double.parseDouble( String.format("%s", config[5] ) );
-                desvioPadrao = Double.parseDouble( String.format("%s", config[6] ) );
-                break;
-            default:
-                System.out.println("Número de parâmetros de entrada não condiz com o esperado.");
-                System.out.println("Padrão: <nº de pcs>,<velocidade internet>,"
-                                    + "<velocidade interna>,<chance erro>,<chance desligado>,"
-                                    + "<tamanho máximo da pacotes>,<desvio padrão>.");
-                System.out.println("Execução irá abortar.");
-                System.exit(1);
+            String[] config = comandosDeConfig.split(",");
+            switch(config.length)
+            {
+                case 1:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    break;
+                case 2:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    break;
+                case 3:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
+                    break;
+                case 4:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
+                    chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
+                    break;
+                case 5:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
+                    chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
+                    chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
+                    break;
+                case 6:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
+                    chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
+                    chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
+                    tamanhoMaximoPacote = Double.parseDouble( String.format("%s", config[5] ) );
+                    break;
+                case 7:
+                    numDeComputadores = Integer.parseInt( String.format("%s", config[0] ) );
+                    velocidadeDaInternet = Double.parseDouble( String.format("%s", config[1] ) );
+                    velocidadeDaIntranet = Double.parseDouble( String.format("%s", config[2] ) );
+                    chanceDeErro = Double.parseDouble( String.format("%s", config[3] ) );
+                    chanceDeDesligar = Double.parseDouble( String.format("%s", config[4] ) );
+                    tamanhoMaximoPacote = Double.parseDouble( String.format("%s", config[5] ) );
+                    desvioPadrao = Double.parseDouble( String.format("%s", config[6] ) );
+                    break;
+                default:
+                    System.out.println("Número de parâmetros de entrada não condiz com o esperado.");
+                    System.out.println("Padrão: <nº de pcs>,<velocidade internet>,"
+                                        + "<velocidade interna>,<chance erro>,<chance desligado>,"
+                                        + "<tamanho máximo da pacotes>,<desvio padrão>.");
+                    System.out.println("Execução irá abortar.");
+                    System.exit(1);
+            }
         }
+        else
+        {
+            numDeComputadores = 5;
+            velocidadeDaInternet = 10.0;
+            velocidadeDaIntranet = 100.0;
+            chanceDeErro = 3.0;
+            chanceDeDesligar = 1.0;
+            tamanhoMaximoPacote = 20.0;
+            desvioPadrao = 3.0;
+        }
+        
         pcs = new boolean[numDeComputadores];
         erro = new int[numDeComputadores];
         desligado = new int[numDeComputadores];
@@ -91,6 +114,12 @@ public class Estatistica {
         System.out.printf("Tanho MAXIMO: %f\n", tamanhoMaximoPacote);
     }
     
+    /**
+     * Método que desliga o computador desde que este
+     *  esteja dentro da rede
+     * 
+     * @param int desl 
+     */
     public static void setDesligaComputador(int desl)
     {
         if(desl >= 0 && desl <= numDeComputadores)
@@ -99,6 +128,12 @@ public class Estatistica {
         }
     }
     
+    /**
+     * Método para ligar o computador desde que este
+     *  esteja dentro da rede
+     * 
+     * @param int lig 
+     */
     public static void setLigarComputador(int lig)
     {
         if(lig > 0 && lig <= numDeComputadores)
@@ -107,6 +142,14 @@ public class Estatistica {
         }
     }
     
+    /**
+     * Método checkStatus, usado para verificar se o computador
+     *  está ligado ou não, com isso antes é gerado aleatóriamente
+     *  a chance desde mesmo se ligar ou desligar
+     * 
+     * @param int computador
+     * @return boolean {true - se ligado | false - se desligado}
+     */
     public static boolean checkStatus(int computador)
     {
         Random random = new Random();
@@ -115,6 +158,7 @@ public class Estatistica {
         {
             if (pcs[computador-1] == true){
                 if (! ((random.nextGaussian()*chanceDeDesligar) < chanceDeDesligar) ){
+                   setLigarComputador(computador);
                    return true;
                 }
             }
@@ -124,43 +168,98 @@ public class Estatistica {
         
     }
     
+    /**
+     * Método que retorna o número de computadores
+     *  que pertencem a rede
+     * 
+     * @return int num numDeComputadores
+     */
     public static int getNumDeComputadores()
     {
         return numDeComputadores;
     }
     
-    public static Double getVelocidadeDaInternet()
+    /**
+     * Método que retorna a velocidade da Internet
+     *  que é simulada
+     * 
+     * @return double velocidadeDaInternet
+     */
+    public static double getVelocidadeDaInternet()
     {
         return velocidadeDaInternet;
     }
     
-    public static Double getVelocidadeDaIntranet()
+    /**
+     * Método que retorna o valor da intranet, ou seja
+     *  da velocidade interna do aparelho
+     * 
+     * @return double velocidadeDaIntranet
+     */
+    public static double getVelocidadeDaIntranet()
     {
         return velocidadeDaIntranet;
     }
     
-    public static Double getChanceDeErro()
+    /**
+     * Método que retorna a chance de erro
+     *  que tem roteador de dar
+     * 
+     * @return double chanceDeErro
+     */
+    public static double getChanceDeErro()
     {
         return chanceDeErro;
     }
     
-    public static Double getChanceDeDesligar()
+    /**
+     * Método que retorna a chace do computador
+     *  se desligar durante a execução
+     * 
+     * @return double chanceDeDesligar
+     */
+    public static double getChanceDeDesligar()
     {
         return chanceDeDesligar;
     }
     
-    public static Double getTamanhoMaximoPacote()
+    /**
+     * Método que retorna o tamanho máximo que
+     *  um pacote dentro do roteador pode ter
+     * 
+     * @return double tamanhoMaximoPacote
+     */
+    public static double getTamanhoMaximoPacote()
     {
         return tamanhoMaximoPacote;
     }
     
-    public static Double getDesvioPadrao()
+    /**
+     * Método que retorna o desvio padrão usado
+     *  no roteador
+     * @return double desvioPadrao
+     */
+    public static double getDesvioPadrao()
     {
         return desvioPadrao;
     }
     
-    public static void erro(int ipOrigem, int ipDestino[], double duracao, int op)
-   {
+    /**
+     * Aqui começa uma série de janelas de mensagens que podem ser usado
+     *  como parte do processamento de estatisca e de troca de mensagens
+     *  relativas a sua utilização
+     */ 
+    
+    
+    /**
+     * Método genérico de mensagem
+     * @param int ipOrigem - ip, ultima parte de um pc interno
+     * @param int[] ipDestino - ip completo, computador destino
+     * @param double duracao - duração
+     * @param int op - 1 enviar e 2 à
+     */
+    public static void erro(int ipOrigem, int[] ipDestino, double duracao, int op)
+    {
        //numeroDeErros[IPComputador] +=1;
        erro[ipOrigem - 1] += 1;
        totalDeEventos++;
@@ -183,7 +282,14 @@ public class Estatistica {
        duracaoTotal += duracao;
    }
     
-    public static void desligado(int ipOrigem, int ipDestino[], double duracao, int op)
+    /**
+     * Método para intormar que o computador está desligado
+     * @param int ipOrigem - ip, ultima parte de um pc interno
+     * @param int[] ipDestino - ip completo, computador destino
+     * @param double duracao - duração
+     * @param int op - 1 enviar e 2 à
+     */
+    public static void desligado(int ipOrigem, int[] ipDestino, double duracao, int op)
     {
        //numeroDeErros[IPComputador] +=1;
        erro[ipOrigem - 1] += 1;
@@ -208,6 +314,13 @@ public class Estatistica {
        duracaoTotal += duracao;
     }
     
+    /**
+     * Método usado para dizer que se acertou o pacote
+     * @param int ipOrigem - ip, ultima parte de um pc interno
+     * @param int[] ipDestino - ip completo, computador destino
+     * @param double duracao - duração
+     * @param int op - 1 enviar e 2 à
+     */
     public static void acerto(int ipOrigem, int ipDestino[], double duracao, int op)
     {
        //numeroDeErros[IPComputador] +=1;
@@ -228,7 +341,18 @@ public class Estatistica {
        duracaoTotal += duracao;
    }
     
+    /**
+     * Método mais genérico, sem propósito estatistico
+     * @param String mensagem 
+     */
+    public static void mensagemGenerica(String mensagem){
+        System.out.printf("Mensage: %s\n",mensagem);
+    }
     
+    /**
+     * Método Finalizar tem o propósido de gerar relatório
+     *  da execução do programa
+     */
     public static void finalizar()
     {
        System.out.printf("*******************************************************\n");
