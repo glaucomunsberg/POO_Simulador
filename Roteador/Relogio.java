@@ -29,8 +29,8 @@ public class Relogio {
      * Insere uma tempo
      * @param double newTime 
      */
-    public static void increaseTime(double newTime){
-        time += newTime;
+    public static void setTime(double newTime){
+        time = newTime;
     }
     
 }

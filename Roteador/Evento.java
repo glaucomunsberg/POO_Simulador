@@ -134,14 +134,14 @@ public class Evento {
             if( this.getTamanhoPacote() >= Estatistica.getTamanhoMaximoPacote())
             {
                 
-                Relogio.increaseTime( this.getDuracao() );
+                //Relogio.setTime( this.getDuracao() );
                 this.setTamanhoPacote( this.getTamanhoPacote() - Estatistica.getTamanhoMaximoPacote() );
                 Estatistica.mensagemGenerica(String.format("Executando,gerará um de tamanho %.2f\n",this.getTamanhoPacote()));
             }
             else
             {
                 Estatistica.mensagemGenerica("Executado\n");
-                Relogio.increaseTime( this.getDuracao() );
+                //Relogio.setTime( this.getDuracao() );
             }
         
         }

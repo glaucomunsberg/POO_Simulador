@@ -74,7 +74,7 @@ public class Simulador extends JPanel {
             
             if(tempAcao != null){
 		if (executarAcao(tempAcao)){
-                    Relogio.increaseTime(tempAcao.getDuracao());
+                    Relogio.setTime(tempAcao.getDuracao());
                     lista.setAcao(tempAcao.gerarProximo());
                 } else {
                     /* Alterar */
