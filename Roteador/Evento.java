@@ -46,17 +46,6 @@ public class Evento {
     }
     
     /**
-     * Construtor especial que não apenas cria um evento
-     *  todo zerado, como também o retorna
-     * @return Evento Temp
-     */
-    public Evento eventoClear()
-    {
-        Evento temp = new Evento();
-        return temp;
-    }
-    
-    /**
      * Este método é realmente o motor do evento,
      * pois está incumbido dentro dele como deve ser executado
      *  e como deve ser o comportamento. Para isso o evento 
@@ -73,16 +62,28 @@ public class Evento {
         if(ipOriginem[0]+ipOriginem[1]+ipOriginem[2]+ipOriginem[3] == 0 || ipDestino[0]+ipDestino[1]+ipDestino[2]+ipDestino[3] == 0)
                 return;
         
+        if(ipOriginem[0] == 127 && Estatistica.checkStatus(ipDestino[3]) == false){
+            Estatistica.desligado(ipOriginem[3], ipDestino, duracao, 0);
+            ipOriginem[0] =0;
+            ipOriginem[1] =0;
+            ipOriginem[2] =0;
+            ipOriginem[3] =0;
+            this.setTamanhoPacote(0.0);
+            return;
+        }
+            
         /**
          * Se ele começar diferente de 0, então este é um ip de origem de fora ou de dentro, mas não é um 
          *  ip usado como comando interno como de ligar, desligar ou ping
          */
         if(ipOriginem[0] != 0)
-        {            
+        {
+            
             int desvio =  geradorAleatorio.nextInt(2);
             double aux;
             double velocidadePacote;
             
+   
             /**
              * Se for destino 127, logo é para dentro e a 
              * velocidade é maior do que se fosse para fora
@@ -97,7 +98,7 @@ public class Evento {
                 aux = (Estatistica.getDesvioPadrao() / 100) * Estatistica.getVelocidadeDaInternet();
                 velocidadePacote = Estatistica.getTamanhoMaximoPacote() / (Estatistica.getVelocidadeDaInternet()*1);
             }
-            
+                        
             /**
              * Sendo gerado um desvio
              *  este pode ser para menos, para mais ou não tendo desvio
@@ -151,6 +152,7 @@ public class Evento {
             switch(ipOriginem[3])
             {
                 case 1://Liga computador
+                        Estatistica.mensagemDeComando(ipDestino, this.ipOriginem[3]);
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
                                 Estatistica.setLigarComputador(ipDestino[3]);
@@ -159,7 +161,7 @@ public class Evento {
                     
                     break;
                 case 2://Desliga Computador
-               
+                        Estatistica.mensagemDeComando(ipDestino, this.ipOriginem[3]);
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
                                 Estatistica.setDesligaComputador(ipDestino[3]);
@@ -175,10 +177,10 @@ public class Evento {
                          * Ping se for 127.1.1.? é para um computador interno e deve ser testado
                          *  se não for então é para a web e por padrão tem um pong de resposta
                          */
+                        Estatistica.mensagemDeComando(ipDestino, this.ipOriginem[3]);
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
-                                if( Estatistica.checkStatus(ipDestino[3]) == true){
-                                    Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
+                                if( Estatistica.checkStatus(ipDestino[3]) ){
                                     System.out.printf("Pong!\n");
                                 }
                                 else

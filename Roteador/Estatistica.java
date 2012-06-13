@@ -155,14 +155,12 @@ public class Estatistica {
         {
             if (pcs[computador-1] == true){
                 if (! ((random.nextGaussian()*chanceDeDesligar) < chanceDeDesligar) ){
-                   setLigarComputador(computador);
-                   return true;
+                   setLigarComputador(computador-1);
+                   return pcs[computador-1];
                 }
             }
         }
-        return false;
-
-        
+        return pcs[computador-1];
     }
     
     /**
@@ -305,7 +303,7 @@ public class Estatistica {
         }
 
         System.out.println("Error: Falha ao " + mensagem + " pacote de 127.0.0."+ ipOrigem +" "+mensagem2+" "
-                +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[4]);
+                +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
         System.out.println("\tComputador Desligado");
     
        duracaoTotal += duracao;
@@ -346,6 +344,24 @@ public class Estatistica {
         System.out.printf("Mensage: %s\n",mensagem);
     }
     
+    /**
+     * Método de 
+     * @param ipDestino
+     * @param tipo 
+     */
+    public static void mensagemDeComando(int[] ipDestino, int tipo){
+        switch(tipo){
+            case 1:
+                    System.out.println("Turn on "+ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
+                    break;
+            case 2:
+                    System.out.println("Turn off "+ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
+                    break;
+            case 3:
+                    System.out.println("Ping     "+ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
+                    break;
+        }
+    }
     /**
      * Método Finalizar tem o propósido de gerar relatório
      *  da execução do programa
