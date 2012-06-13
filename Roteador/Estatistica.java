@@ -109,9 +109,6 @@ public class Estatistica {
         erro = new int[numDeComputadores];
         desligado = new int[numDeComputadores];
         acerto = new int[numDeComputadores];
-        pcs[0] = true;
-        pcs[1] = true;
-        System.out.printf("Tanho MAXIMO: %f\n", tamanhoMaximoPacote);
     }
     
     /**
@@ -353,7 +350,7 @@ public class Estatistica {
      * Método Finalizar tem o propósido de gerar relatório
      *  da execução do programa
      */
-    public static void finalizar()
+    public static void gerarRelatorio()
     {
        System.out.printf("*******************************************************\n");
        System.out.printf("*              Características do Sistema             *\n");

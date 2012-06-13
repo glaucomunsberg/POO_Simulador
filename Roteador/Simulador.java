@@ -1,13 +1,10 @@
 /**
- *  Gataway padrão 127.1.1.0
- *  Ip's Internos 127.1.1.x | 0 > x < 5 
+ *  Gataway padrão 127,1,1,0
+ *  Ip's Internos 127,1,1,x | 0 > x < 5 
  * 
  */ 
 package Roteador;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Simulador extends JPanel {
@@ -65,7 +62,7 @@ public class Simulador extends JPanel {
         Evento tempAcao;
         
         if(lista == null) {
-            System.out.printf("Ooops! não tem mais nada na fila");
+            System.out.printf("Ooops! não tem mais nada na fila\n");
             System.exit(0);
         }
         
@@ -85,7 +82,7 @@ public class Simulador extends JPanel {
     
     public void finalizar()
     {
-        Estatistica.finalizar();
+        Estatistica.gerarRelatorio();
     }
     
     public static void main(String[] args) {

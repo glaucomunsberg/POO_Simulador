@@ -33,7 +33,6 @@ public class ListaDeAcoes {
             if(  (ip[0] + ip[1] + ip[2] + ip[3] )  != 0 ) 
             {
                 acoes.add(acoes.size(), acao);
-                System.out.printf("Ação adicionada: %d\n", acoes.size());
             }
         }
         

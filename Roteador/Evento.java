@@ -66,10 +66,11 @@ public class Evento {
      */
     public void execucao(){
         geradorAleatorio = new Random();
+        
         /**
          * se for tudo zero, ou seja um evento limpo então este deve ser descartado
          */
-        if(ipOriginem[0]+ipOriginem[1]+ipOriginem[2]+ipOriginem[3] == 0 && ipDestino[0]+ipDestino[1]+ipDestino[2]+ipDestino[3] == 0)
+        if(ipOriginem[0]+ipOriginem[1]+ipOriginem[2]+ipOriginem[3] == 0 || ipDestino[0]+ipDestino[1]+ipDestino[2]+ipDestino[3] == 0)
                 return;
         
         /**
@@ -86,7 +87,7 @@ public class Evento {
              * Se for destino 127, logo é para dentro e a 
              * velocidade é maior do que se fosse para fora
              */
-            if( this.ipDestino[0] == 127 )
+            if( this.ipDestino[0] == 127 && this.ipOriginem[0] == 127  )
             {
                 aux = (Estatistica.getDesvioPadrao() / 100) * Estatistica.getVelocidadeDaIntranet();
                 velocidadePacote = Estatistica.getTamanhoMaximoPacote() / (Estatistica.getVelocidadeDaIntranet()*1);
@@ -130,18 +131,11 @@ public class Evento {
              * (isso simula os pedaços que chegam)
              * 
              */
-            Estatistica.mensagemGenerica(String.format(" tamanho pacote: %f tamanho maximo: %f ", getTamanhoPacote(), Estatistica.getTamanhoMaximoPacote()));
             if( this.getTamanhoPacote() >= Estatistica.getTamanhoMaximoPacote())
             {
                 
                 //Relogio.setTime( this.getDuracao() );
                 this.setTamanhoPacote( this.getTamanhoPacote() - Estatistica.getTamanhoMaximoPacote() );
-                Estatistica.mensagemGenerica(String.format("Executando,gerará um de tamanho %.2f\n",this.getTamanhoPacote()));
-            }
-            else
-            {
-                Estatistica.mensagemGenerica("Executado\n");
-                //Relogio.setTime( this.getDuracao() );
             }
         
         }
@@ -157,7 +151,6 @@ public class Evento {
             switch(ipOriginem[3])
             {
                 case 1://Liga computador
-                        System.out.printf("Liga comnputador!\n");
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
                                 Estatistica.setLigarComputador(ipDestino[3]);
@@ -166,14 +159,14 @@ public class Evento {
                     
                     break;
                 case 2://Desliga Computador
-                        Estatistica.mensagemGenerica("Desligando Computador");
+               
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
                                 Estatistica.setDesligaComputador(ipDestino[3]);
                             }
                             else
                             {
-                                Estatistica.erro(idPacote, ipDestino, duracao, idPacote);
+                                Estatistica.erro(this.ipOriginem[3], ipDestino, duracao, 0);
                             }
                         }
                     break;
@@ -182,20 +175,22 @@ public class Evento {
                          * Ping se for 127.1.1.? é para um computador interno e deve ser testado
                          *  se não for então é para a web e por padrão tem um pong de resposta
                          */
-                        Estatistica.mensagemGenerica(String.format("ping no computador %d.%d.%d.%d\n", ipDestino[0],ipDestino[1],ipDestino[2],ipDestino[3]));
                         if(ipDestino[0] == 127 && ipDestino[1] == 1 && ipDestino[2] == 1){
                             if(ipDestino[3] > 0 && ipDestino[3] <= Estatistica.getNumDeComputadores()){
                                 if( Estatistica.checkStatus(ipDestino[3]) == true){
+                                    Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
                                     System.out.printf("Pong!\n");
                                 }
                                 else
                                 {
+                                    Estatistica.desligado(ipDestino[3], ipDestino, duracao, 0);
                                     Estatistica.mensagemGenerica(String.format("error server %d.%d.%d.%d not found or server may be down\n", ipDestino[0],ipDestino[1],ipDestino[2],ipDestino[3]));
                                 }
                             }
                         }
                         else
                         {
+                            Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
                             Estatistica.mensagemGenerica("Pong!\n");
                         }
                     break;
@@ -216,7 +211,7 @@ public class Evento {
     public Evento gerarProximo(){
         if( this.getTamanhoPacote() >= Estatistica.getTamanhoMaximoPacote() )
         {
-            System.out.printf("proximo terá %.2f\n", this.getTamanhoPacote());
+            Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
             return this;
         }
         else
@@ -232,7 +227,6 @@ public class Evento {
      * @param double data 
      */
     public void setData(double data){
-        System.out.printf("SetData\n");
         this.data = data;
     }
     
@@ -243,9 +237,7 @@ public class Evento {
      */
     public void setTamanhoPacote(double tamanho)
     {
-        System.out.printf("iniciou %.2f\n", this.getTamanhoPacote());
         tamanhoPacote = tamanho;
-        System.out.printf("virou %.2f\n", this.getTamanhoPacote());
     }
     
     /**
@@ -254,7 +246,6 @@ public class Evento {
      * @param double duracao 
      */
     public void setDuracao(double duracao){
-        System.out.printf("setDuracao\n");
         this.duracao = duracao;
     }
     
@@ -265,7 +256,7 @@ public class Evento {
      * @param int id 
      */
     public void setIDPacote(int id){
-        this.idPacote = id;
+        Evento.idPacote = id;
     }
     
     /**
@@ -277,9 +268,7 @@ public class Evento {
      * @param ip[] 
      */
     public void setIpOrigem(int[] ip){
-        this.ipOriginem = ip;
-        System.out.printf("ID origem %d.%d.%d.%d\n", ipOriginem[0],ipOriginem[1],ipOriginem[2],ipOriginem[3]);
-        
+        this.ipOriginem = ip;   
     }
     
     /**
@@ -291,9 +280,7 @@ public class Evento {
      * @param ip[] 
      */
     public void setIpDestino(int[] ip){
-        this.ipDestino = ip;
-        System.out.printf("ID destino %d.%d.%d.%d\n", ipDestino[0],ipDestino[1],ipDestino[2],ipDestino[3]);
-        
+        this.ipDestino = ip;     
     }
     
     /**
@@ -338,7 +325,7 @@ public class Evento {
      * @return int idPacote
      */
     public int getIDPacote(){
-        return this.idPacote;
+        return Evento.idPacote;
     }
 
     /**
