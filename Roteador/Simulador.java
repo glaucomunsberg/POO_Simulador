@@ -5,9 +5,57 @@
  */ 
 package Roteador;
 
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Simulador extends JPanel {
+public class Simulador extends JFrame {
+    static private JPanel JPanelTotal;
+    static private JPanel [] computador = new JPanel[4]; 
+    static private Color corCinza = Color.GRAY;
+    static private Color corVerde = Color.GREEN;
+
+                            
+    
+    public Simulador(){
+        setTitle("Simulador");
+        
+        JPanelTotal = new JPanel();
+        JPanelTotal.setBackground(Color.GRAY);
+        JPanelTotal.setLayout(new GridLayout(1,5));
+        
+        computador[0] = new JPanel();
+        computador[0].setSize(40, 130);
+        computador[0].setBackground(corCinza);
+        computador[0].setBounds(10, 10, 10, 10);
+        JPanelTotal.add(computador[0]);
+        
+        computador[1] = new JPanel();
+        computador[1].setSize(40, 130);
+        computador[1].setBackground(corCinza);
+        JPanelTotal.add(computador[1]);
+        
+        computador[2] = new JPanel();
+        computador[2].setSize(40, 130);
+        computador[2].setBackground(corCinza);
+        JPanelTotal.add(computador[2]);
+        
+        computador[3] = new JPanel();
+        computador[3].setSize(40, 130);
+        computador[3].setBackground(corCinza);
+        JPanelTotal.add(computador[3]);
+        
+        
+        this.setBackground(Color.black);
+        add(JPanelTotal);
+        setSize(160,130);						//Já diz qual será o tamanho
+	setVisible(true);
+    
+    }
+    
+    
+    
     
     /**
      * O método deve carregar a lista de ações,
@@ -46,6 +94,18 @@ public class Simulador extends JPanel {
      * @return Boolean {true - se executou com sucesso | false - se não conseguiu executar }
      */
     public static boolean executarAcao(Evento acao){
+        for(int a=0; a < Estatistica.getNumDeComputadores();a++){
+           if( Estatistica.checkStatus(a+1))
+           {
+               computador[a].setBackground(corVerde);
+           }
+           else
+           {
+               computador[a].setBackground(corCinza);
+           }
+        }
+        
+                
         acao.execucao();
         return true;
     }
@@ -87,6 +147,8 @@ public class Simulador extends JPanel {
     
     public static void main(String[] args) {
         Simulador simula = new Simulador();
+        simula.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
+        simula.setVisible(true);
         simula.simular();
         simula.finalizar();
     }
