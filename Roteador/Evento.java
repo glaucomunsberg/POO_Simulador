@@ -66,7 +66,7 @@ public class Evento {
                 return;
         
         if(ipOriginem[0] == 127 && Estatistica.checkStatus(ipDestino[3]) == false){
-            Estatistica.desligado(ipOriginem[3], ipDestino, duracao, 0);
+            Estatistica.desligado(ipOriginem, ipDestino, duracao, 0);
             ipOriginem[0] =0;
             ipOriginem[1] =0;
             ipOriginem[2] =0;
@@ -92,6 +92,7 @@ public class Evento {
              * velocidade é maior do que se fosse para fora
              */
             double tamanhoLocal = 0; //tamanho real de pacote gerenciado por este evento
+            int op = 0;
             
             if (this.tamanhoPacote >= Estatistica.getTamanhoMaximoPacote()){
                 tamanhoLocal = Estatistica.getTamanhoMaximoPacote();
@@ -109,8 +110,10 @@ public class Evento {
                 aux = (Estatistica.getDesvioPadrao() / 100) * Estatistica.getVelocidadeDaInternet();
                 if (this.ipOriginem[0] == 127) { //true: upload
                     velocidadePacote = tamanhoLocal / (Estatistica.getVelocidadeDaInternet()*0.05);
+                    op = 0;
                 } else { //download
                     velocidadePacote = tamanhoLocal / (Estatistica.getVelocidadeDaInternet()*0.1);
+                    op = 1;
                 }
             }
                         
@@ -151,7 +154,31 @@ public class Evento {
             {
                 
                 //Relogio.setTime( this.getDuracao() );
-                this.setTamanhoPacote( this.getTamanhoPacote() - Estatistica.getTamanhoMaximoPacote() );
+                Random miss = new Random();
+                if (miss.nextDouble() < Estatistica.getChanceDeErro())
+                {
+                    Estatistica.erro(ipOriginem, ipDestino, duracao, op);
+                }
+                else 
+                {
+                    int pc = ipDestino[3];
+                    
+                    if (ipOriginem[0] == 127)
+                    {
+                        pc = ipOriginem[3];
+                    }
+                    
+                    if (Estatistica.checkStatus(pc))
+                    {
+                        this.setTamanhoPacote( this.getTamanhoPacote() - Estatistica.getTamanhoMaximoPacote() );
+                        Estatistica.acerto(ipOriginem, ipDestino, duracao, op);
+                    }
+                    else
+                    {
+                        Estatistica.desligado(ipOriginem, ipDestino, duracao, op);
+                        this.setTamanhoPacote(0);
+                    }
+                }
             }
         
         }
@@ -183,7 +210,7 @@ public class Evento {
                             }
                             else
                             {
-                                Estatistica.erro(this.ipOriginem[3], ipDestino, duracao, 0);
+                                Estatistica.erro(this.ipOriginem, ipDestino, duracao, 0);
                             }
                         }
                     break;
@@ -200,14 +227,14 @@ public class Evento {
                                 }
                                 else
                                 {
-                                    Estatistica.desligado(ipDestino[3], ipDestino, duracao, 0);
+                                    Estatistica.desligado(ipDestino, ipDestino, duracao, 0);
                                     Estatistica.mensagemGenerica(String.format("error server %d.%d.%d.%d not found or server may be down\n", ipDestino[0],ipDestino[1],ipDestino[2],ipDestino[3]));
                                 }
                             }
                         }
                         else
                         {
-                            Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
+                            Estatistica.acerto(ipDestino, ipDestino, duracao, 0);
                             Estatistica.mensagemGenerica("Pong!\n");
                         }
                     break;
@@ -228,7 +255,6 @@ public class Evento {
     public Evento gerarProximo(){
         if( this.getTamanhoPacote() >= Estatistica.getTamanhoMaximoPacote() )
         {
-            Estatistica.acerto(ipDestino[3], ipDestino, duracao, 0);
             return this;
         }
         else

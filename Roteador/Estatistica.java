@@ -104,7 +104,8 @@ public class Estatistica {
             tamanhoMaximoPacote = 20.0;
             desvioPadrao = 3.0;
         }
-        
+        chanceDeErro = chanceDeErro/100;
+        chanceDeDesligar = chanceDeDesligar/100;
         pcs = new boolean[numDeComputadores];
         erro = new int[numDeComputadores];
         desligado = new int[numDeComputadores];
@@ -154,9 +155,8 @@ public class Estatistica {
         if(computador > 0 && computador <= numDeComputadores)
         {
             if (pcs[computador-1] == true){
-                if (! ((random.nextGaussian()*chanceDeDesligar) < chanceDeDesligar) ){
+                if (! ((random.nextDouble()) < chanceDeDesligar) ){
                    setLigarComputador(computador-1);
-                   return pcs[computador-1];
                 }
             }
         }
@@ -253,10 +253,14 @@ public class Estatistica {
      * @param double duracao - duração
      * @param int op - 1 enviar e 2 à
      */
-    public static void erro(int ipOrigem, int[] ipDestino, double duracao, int op)
+    public static void erro(int[] ipOrigem, int[] ipDestino, double duracao, int op)
     {
        //numeroDeErros[IPComputador] +=1;
-       erro[ipOrigem - 1] += 1;
+       if (op == 0){
+            erro[ipOrigem[3] - 1] += 1;
+       } else {
+            erro[ipDestino[3] - 1] += 1;
+       }
        totalDeEventos++;
        
        String mensagem = "";
@@ -272,7 +276,7 @@ public class Estatistica {
         }
 
         System.out.println("Error: Falha ao " + mensagem + " pacote " + " "+mensagem2+" "
-                +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[4]);
+                +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
     
        duracaoTotal += duracao;
    }
@@ -284,10 +288,14 @@ public class Estatistica {
      * @param double duracao - duração
      * @param int op - 1 enviar e 2 à
      */
-    public static void desligado(int ipOrigem, int[] ipDestino, double duracao, int op)
+    public static void desligado(int[] ipOrigem, int[] ipDestino, double duracao, int op)
     {
        //numeroDeErros[IPComputador] +=1;
-       erro[ipOrigem - 1] += 1;
+       if (op == 0){
+            desligado[ipOrigem[3] - 1] += 1;
+       } else {
+            desligado[ipDestino[3] - 1] += 1;
+       }
        totalDeEventos++;
        
        String mensagem = "";
@@ -316,10 +324,14 @@ public class Estatistica {
      * @param double duracao - duração
      * @param int op - 1 enviar e 2 à
      */
-    public static void acerto(int ipOrigem, int ipDestino[], double duracao, int op)
+    public static void acerto(int[] ipOrigem, int ipDestino[], double duracao, int op)
     {
        //numeroDeErros[IPComputador] +=1;
-       acerto[ipOrigem - 1] += 1;
+       if (op == 0){
+            acerto[ipOrigem[3] - 1] += 1;
+       } else {
+            acerto[ipDestino[3] - 1] += 1;
+       }
        totalDeEventos++;
        
        String mensagem = "";
