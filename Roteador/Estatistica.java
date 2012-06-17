@@ -152,14 +152,15 @@ public class Estatistica {
     {
         Random random = new Random();
         
-        if(computador > 0 && computador <= numDeComputadores)
-        {
-            if (pcs[computador-1] == true){
-                if (! ((random.nextDouble()) < chanceDeDesligar) ){
-                   setLigarComputador(computador-1);
-                }
-            }
-        }
+        //if(computador > 0 && computador <= numDeComputadores)
+        //{
+          //  if (pcs[computador-1] == true){
+          //      if (! ((random.nextDouble()) < chanceDeDesligar) ){
+          //         setLigarComputador(computador-1);
+          //      }
+          //  }
+         //   return pcs[computador-1];
+        //}
         return pcs[computador-1];
     }
     
@@ -274,7 +275,6 @@ public class Estatistica {
                     mensagem2 = "de";
                 break;
         }
-
         System.out.println("Error: Falha ao " + mensagem + " pacote " + " "+mensagem2+" "
                 +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
     

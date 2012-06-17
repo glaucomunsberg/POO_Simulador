@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Simulador extends JFrame {
     static private JPanel painelComputadores;
-    static private JPanel [] computador = new JPanel[4];
+    static protected JPanel [] computador = new JPanel[4];
     static private JPanel painelLigado;
     static private JPanel painelInternet;
     static private JPanel painelFundo;
@@ -20,6 +20,7 @@ public class Simulador extends JFrame {
     static private Color corCinza = Color.GRAY;
     static private Color corVerde = Color.GREEN;
     static private Color corAmarela = Color.YELLOW;
+    static private int velocidadeDaLed = 100;
 
                             
     
@@ -131,6 +132,7 @@ public class Simulador extends JFrame {
      * @return Boolean {true - se executou com sucesso | false - se não conseguiu executar }
      */
     public static boolean executarAcao(Evento acao){
+        
         for(int a=0; a < Estatistica.getNumDeComputadores();a++){
            if( Estatistica.checkStatus(a+1))
            {
@@ -140,18 +142,49 @@ public class Simulador extends JFrame {
            {
                computador[a].setBackground(corCinza);
            }
-        }       
+        } 
+        
         acao.execucao();
         int ipdestino[] = acao.getIPDestino();
-        if( ipdestino[0] == 127 && ipdestino[1] == 1 && ipdestino[2] == 1){
-            computador[ipdestino[3]-1].setBackground(corAmarela);
+        int ipOrigem[] = acao.getIPOrigem();
+        if(ipOrigem[0] == 0)
+            return true;
+        if(ipOrigem[0] == 127 && ipOrigem[1] == 1 && ipOrigem[2] == 1 && Estatistica.checkStatus(ipOrigem[3])){
+            computador[ipOrigem[3]-1].setBackground(corAmarela);
             try
             {
-                Thread.sleep(500);
+                Thread.sleep(velocidadeDaLed);
             } catch(Exception e) {
                 //System.out.println("continuando");
             }
-            computador[ipdestino[3]-1].setBackground(corVerde);
+            if(computador[ipOrigem[3]-1].getBackground() != Color.GREEN)
+                computador[ipOrigem[3]-1].setBackground(corVerde);
+        }
+        else
+        {
+        
+                if(painelInternet.getBackground() != Color.RED )
+                {
+                    painelInternet.setBackground(corAmarela);
+                    try
+                    {
+                        Thread.sleep(velocidadeDaLed);
+                    } catch(Exception e) {
+                        //System.out.println("continuando");
+                    }
+                    painelInternet.setBackground(corVerde);
+                }
+        }
+        if( ipdestino[0] == 127 && ipdestino[1] == 1 && ipdestino[2] == 1 && Estatistica.checkStatus(ipdestino[3])){
+            computador[ipdestino[3]-1].setBackground(corAmarela);
+            try
+            {
+                Thread.sleep(velocidadeDaLed);
+            } catch(Exception e) {
+                //System.out.println("continuando");
+            }
+            if(computador[ipdestino[3]-1].getBackground() != Color.GREEN)
+                computador[ipdestino[3]-1].setBackground(corVerde);
         }
             
         return true;
