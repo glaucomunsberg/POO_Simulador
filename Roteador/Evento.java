@@ -14,7 +14,7 @@ public class Evento {
     private double duracao;
     private int[] ipOriginem;
     private int[] ipDestino;
-    static private int totalDePacotes;
+    static protected int totalDePacotes;
     private int idPacote;
     private double tamanhoPacote;
     private static Random geradorAleatorio;

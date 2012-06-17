@@ -126,7 +126,7 @@ public class ListaDeAcoes {
                         temp.setIpOrigem(new int[]{Integer.parseInt(ipOrigem[0]),Integer.parseInt(ipOrigem[1]),Integer.parseInt(ipOrigem[2]),Integer.parseInt(ipOrigem[3]) });  
                         
                         String[] ipDestino = argumentos[1].split(",");
-                        temp.setIpDestino(new int[]{Integer.parseInt(ipDestino[0]),Integer.parseInt(ipDestino[1]),Integer.parseInt(ipDestino[2]),Integer.parseInt(ipDestino[3]) });  
+                        temp.setIpDestino(new int[]{Integer.parseInt(ipDestino[0]),Integer.parseInt(ipDestino[1]),Integer.parseInt(ipDestino[2]),Integer.parseInt(ipDestino[3]) });
                         double aDouble = Double.parseDouble(argumentos[2]+".0");
                         temp.setTamanhoPacote(aDouble);
                         this.setAcao(temp);

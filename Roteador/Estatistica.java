@@ -380,6 +380,7 @@ public class Estatistica {
        System.out.printf("* Chance de erro: %.2f %%                             *\n", chanceDeErro);
        System.out.printf("* Chance de computador desligado: %.2f %%             *\n", chanceDeDesligar);
        System.out.printf("* Desvio Padrão: %.2f                                 *\n", desvioPadrao);
+       System.out.printf("* Total de Pacotes: %d                                *\n", Evento.totalDePacotes);
        System.out.printf("*******************************************************\n");
        
        System.out.println();
