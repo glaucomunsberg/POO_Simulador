@@ -271,7 +271,7 @@ public class Estatistica {
                 break;
         }
 
-        System.out.println("Error: Falha ao " + mensagem + " pacote de 127.0.0."+ ipOrigem +" "+mensagem2+" "
+        System.out.println("Error: Falha ao " + mensagem + " pacote " + " "+mensagem2+" "
                 +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[4]);
     
        duracaoTotal += duracao;
@@ -302,7 +302,7 @@ public class Estatistica {
                 break;
         }
 
-        System.out.println("Error: Falha ao " + mensagem + " pacote de 127.0.0."+ ipOrigem +" "+mensagem2+" "
+        System.out.println("Error: Falha ao " + mensagem + " pacote "+ mensagem2+" "
                 +ipDestino[0]+"."+ipDestino[1]+"."+ipDestino[2]+"."+ipDestino[3]);
         System.out.println("\tComputador Desligado");
     

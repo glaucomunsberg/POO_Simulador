@@ -14,7 +14,8 @@ public class Evento {
     private double duracao;
     private int[] ipOriginem;
     private int[] ipDestino;
-    static private int idPacote;
+    static private int totalDePacotes;
+    private int idPacote;
     private double tamanhoPacote;
     private static Random geradorAleatorio;
     
@@ -23,7 +24,8 @@ public class Evento {
      * com todo os valores igual a zero
      */
     public Evento(){
-        idPacote+=1;
+        totalDePacotes+=1;
+        idPacote = totalDePacotes;
         this.data = 0.0;
         this.duracao = 0.0;
         this.tamanhoPacote = 0.0;
@@ -37,7 +39,8 @@ public class Evento {
      * @param Evento E 
      */
     public Evento(Evento E){
-        idPacote+=1;
+        totalDePacotes+=1;
+        idPacote = totalDePacotes;
         this.data = E.data;
         this.duracao = E.duracao;
         this.ipOriginem = E.ipOriginem;
@@ -55,7 +58,7 @@ public class Evento {
      */
     public void execucao(){
         geradorAleatorio = new Random();
-        
+        System.out.printf("ID: %d\nTamanho %.2f\n",this.idPacote, this.tamanhoPacote);
         /**
          * se for tudo zero, ou seja um evento limpo então este deve ser descartado
          */
@@ -88,15 +91,27 @@ public class Evento {
              * Se for destino 127, logo é para dentro e a 
              * velocidade é maior do que se fosse para fora
              */
-            if( this.ipDestino[0] == 127 && this.ipOriginem[0] == 127  )
+            double tamanhoLocal = 0; //tamanho real de pacote gerenciado por este evento
+            
+            if (this.tamanhoPacote >= Estatistica.getTamanhoMaximoPacote()){
+                tamanhoLocal = Estatistica.getTamanhoMaximoPacote();
+            } else {
+                tamanhoLocal = this.tamanhoPacote;
+            }
+            
+            if( this.ipDestino[0] == 127 && this.ipOriginem[0] == 127  ) //true: transferência interna
             {
                 aux = (Estatistica.getDesvioPadrao() / 100) * Estatistica.getVelocidadeDaIntranet();
-                velocidadePacote = Estatistica.getTamanhoMaximoPacote() / (Estatistica.getVelocidadeDaIntranet()*1);
+                velocidadePacote = tamanhoLocal / (Estatistica.getVelocidadeDaIntranet()*0.1);
             }
             else
             {
                 aux = (Estatistica.getDesvioPadrao() / 100) * Estatistica.getVelocidadeDaInternet();
-                velocidadePacote = Estatistica.getTamanhoMaximoPacote() / (Estatistica.getVelocidadeDaInternet()*1);
+                if (this.ipOriginem[0] == 127) { //true: upload
+                    velocidadePacote = tamanhoLocal / (Estatistica.getVelocidadeDaInternet()*0.05);
+                } else { //download
+                    velocidadePacote = tamanhoLocal / (Estatistica.getVelocidadeDaInternet()*0.1);
+                }
             }
                         
             /**
@@ -106,7 +121,7 @@ public class Evento {
              */
             double aux2;
             do{
-                   aux2 = (int) aux + geradorAleatorio.nextGaussian();
+                   aux2 = (int) aux * geradorAleatorio.nextGaussian();
               } while(aux2 > aux || aux2 < 0);
             
             double desvioPacote;
@@ -258,7 +273,7 @@ public class Evento {
      * @param int id 
      */
     public void setIDPacote(int id){
-        Evento.idPacote = id;
+        this.idPacote = id;
     }
     
     /**
@@ -327,7 +342,7 @@ public class Evento {
      * @return int idPacote
      */
     public int getIDPacote(){
-        return Evento.idPacote;
+        return this.idPacote;
     }
 
     /**
