@@ -11,45 +11,82 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Simulador extends JFrame {
-    static private JPanel JPanelTotal;
-    static private JPanel [] computador = new JPanel[4]; 
+    static private JPanel painelComputadores;
+    static private JPanel [] computador = new JPanel[4];
+    static private JPanel painelLigado;
+    static private JPanel painelInternet;
+    static private JPanel painelFundo;
+    static private JPanel painelFundo2;
     static private Color corCinza = Color.GRAY;
     static private Color corVerde = Color.GREEN;
+    static private Color corAmarela = Color.YELLOW;
 
                             
     
     public Simulador(){
         setTitle("Simulador");
         
-        JPanelTotal = new JPanel();
-        JPanelTotal.setBackground(Color.GRAY);
-        JPanelTotal.setLayout(new GridLayout(1,5));
+        painelComputadores = new JPanel();
+        painelComputadores.setBackground(Color.GRAY);
+        painelComputadores.setLayout(new GridLayout(2,4));
         
+        //Insindo a luz de Ligado e de Internet
+        
+        painelLigado = new JPanel();
+        painelLigado.setBorder( javax.swing.BorderFactory.createTitledBorder("Ligado"));
+        painelLigado.setBackground(Color.RED);
+        painelLigado.setSize(40, 130);
+        painelComputadores.add(painelLigado);
+        
+        painelInternet = new JPanel();
+        painelInternet.setBorder( javax.swing.BorderFactory.createTitledBorder("Internet"));
+        painelInternet.setBackground(Color.RED);
+        painelInternet.setSize(40, 130);
+        painelComputadores.add(painelInternet);
+        
+        painelFundo = new JPanel();
+        painelFundo.setBackground(Color.white);
+        painelFundo.setSize(40, 130);
+        painelFundo2 = new JPanel();
+        painelFundo2.setBackground(Color.white);
+        painelFundo2.setSize(40, 130);
+        painelComputadores.add(painelFundo);
+        painelComputadores.add(painelFundo2);
+
         computador[0] = new JPanel();
-        computador[0].setSize(40, 130);
+        computador[0].setName("Computador 1");
+        computador[0].setBorder( javax.swing.BorderFactory.createTitledBorder("Pc 1"));
+        computador[0].setSize(40, 130);                    
         computador[0].setBackground(corCinza);
         computador[0].setBounds(10, 10, 10, 10);
-        JPanelTotal.add(computador[0]);
+        painelComputadores.add(computador[0]);
         
         computador[1] = new JPanel();
+        computador[1].setName("Computador 2");
+        computador[1].setBorder( javax.swing.BorderFactory.createTitledBorder("Pc 2"));
         computador[1].setSize(40, 130);
         computador[1].setBackground(corCinza);
-        JPanelTotal.add(computador[1]);
+        painelComputadores.add(computador[1]);
         
         computador[2] = new JPanel();
+        computador[2].setName("Computador 3");
         computador[2].setSize(40, 130);
+        computador[2].setBorder( javax.swing.BorderFactory.createTitledBorder("Pc 3"));
         computador[2].setBackground(corCinza);
-        JPanelTotal.add(computador[2]);
+        painelComputadores.add(computador[2]);
         
         computador[3] = new JPanel();
+        computador[3].setName("Computador 4");
+        computador[3].setBorder( javax.swing.BorderFactory.createTitledBorder("Pc 4"));
         computador[3].setSize(40, 130);
         computador[3].setBackground(corCinza);
-        JPanelTotal.add(computador[3]);
-        
+        painelComputadores.add(computador[3]);
         
         this.setBackground(Color.black);
-        add(JPanelTotal);
-        setSize(160,130);						//Já diz qual será o tamanho
+        add(painelComputadores);
+
+        this.setResizable(false);
+        setSize(400,130);						//Já diz qual será o tamanho
 	setVisible(true);
     
     }
@@ -103,10 +140,20 @@ public class Simulador extends JFrame {
            {
                computador[a].setBackground(corCinza);
            }
-        }
-        
-                
+        }       
         acao.execucao();
+        int ipdestino[] = acao.getIPDestino();
+        if( ipdestino[0] == 127 && ipdestino[1] == 1 && ipdestino[2] == 1){
+            computador[ipdestino[3]-1].setBackground(corAmarela);
+            try
+            {
+                Thread.sleep(500);
+            } catch(Exception e) {
+                //System.out.println("continuando");
+            }
+            computador[ipdestino[3]-1].setBackground(corVerde);
+        }
+            
         return true;
     }
     
@@ -124,6 +171,11 @@ public class Simulador extends JFrame {
         if(lista == null) {
             System.out.printf("Ooops! não tem mais nada na fila\n");
             System.exit(0);
+        }
+        else{
+            painelLigado.setBackground( Color.green);
+            if( Estatistica.getVelocidadeDaInternet() > 0 )
+                painelInternet.setBackground( Color.green);
         }
         
         while( !lista.isEmpty() ){
