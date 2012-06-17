@@ -150,6 +150,7 @@ public class Simulador extends JFrame {
         if(ipOrigem[0] == 0)
             return true;
         if(ipOrigem[0] == 127 && ipOrigem[1] == 1 && ipOrigem[2] == 1 && Estatistica.checkStatus(ipOrigem[3])){
+            
             computador[ipOrigem[3]-1].setBackground(corAmarela);
             try
             {
@@ -161,8 +162,7 @@ public class Simulador extends JFrame {
                 computador[ipOrigem[3]-1].setBackground(corVerde);
         }
         else
-        {
-        
+        {       
                 if(painelInternet.getBackground() != Color.RED )
                 {
                     painelInternet.setBackground(corAmarela);
@@ -185,6 +185,22 @@ public class Simulador extends JFrame {
             }
             if(computador[ipdestino[3]-1].getBackground() != Color.GREEN)
                 computador[ipdestino[3]-1].setBackground(corVerde);
+        }
+        else
+        {
+                if(painelInternet.getBackground() != Color.RED )
+                {
+                    painelInternet.setBackground(corAmarela);
+                    try
+                    {
+                        Thread.sleep(velocidadeDaLed);
+                    } catch(Exception e) {
+                        //System.out.println("continuando");
+                    }
+                    painelInternet.setBackground(corVerde);
+                }
+        
+        
         }
             
         return true;

@@ -152,16 +152,24 @@ public class Estatistica {
     {
         Random random = new Random();
         
-        //if(computador > 0 && computador <= numDeComputadores)
-        //{
-          //  if (pcs[computador-1] == true){
-          //      if (! ((random.nextDouble()) < chanceDeDesligar) ){
-          //         setLigarComputador(computador-1);
-          //      }
-          //  }
-         //   return pcs[computador-1];
-        //}
-        return pcs[computador-1];
+        
+        try
+        {
+            if(computador > 0 && computador <= numDeComputadores)
+            {
+              if (pcs[computador-1] == true){
+                  if (! ((random.nextDouble()) < chanceDeDesligar) ){
+                     setLigarComputador(computador-1);
+                  }
+              }
+               return pcs[computador-1];
+            }
+            return pcs[computador-1];
+        }
+        catch(ArrayIndexOutOfBoundsException e ){
+            return false;
+        }
+        
     }
     
     /**
@@ -268,10 +276,10 @@ public class Estatistica {
        String mensagem2 = "";
              
         switch(op){
-            case 0: mensagem = "enviar";
+            case 0: mensagem = "enviado";
                     mensagem2 = "à";
                 break;
-            case 1: mensagem = "receber";
+            case 1: mensagem = "recebido";
                     mensagem2 = "de";
                 break;
         }
@@ -302,10 +310,10 @@ public class Estatistica {
        String mensagem2 = "";
              
         switch(op){
-            case 0: mensagem = "enviar";
+            case 0: mensagem = "enviado";
                     mensagem2 = "à";
                 break;
-            case 1: mensagem = "receber";
+            case 1: mensagem = "recebido";
                     mensagem2 = "de";
                 break;
         }
@@ -337,9 +345,9 @@ public class Estatistica {
        String mensagem = "";
              
         switch(op){
-            case 0: mensagem = "enviar";
+            case 0: mensagem = "enviado";
                 break;
-            case 1: mensagem = "receber";
+            case 1: mensagem = "recebido";
                 break;
         }
 

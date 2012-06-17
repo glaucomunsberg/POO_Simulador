@@ -58,7 +58,6 @@ public class Evento {
      */
     public void execucao(){
         geradorAleatorio = new Random();
-        System.out.printf("ID: %d\nTamanho %.2f\n",this.idPacote, this.tamanhoPacote);
         /**
          * se for tudo zero, ou seja um evento limpo então este deve ser descartado
          */
