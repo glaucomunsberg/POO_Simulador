@@ -31,3 +31,9 @@ Abaixo algumas modificações na sua extrutura:
      - A classe de Estatistica agora assume um papel mais "estatístico", sendo assim é responsável
         por informações como o tamanho máximo do pacote, chance de quebrar o pacote e etc. Bem como
         gerenciar mensagens de erros e etc.
+
+Executar:
+	java Roteador/Simulador < Roteador/listaDeComandos
+
+Errata:
+	Para que haja a execução, o número de computadores deve ser de até 4, pois o grupo decidiu utilizar uma interface gráfica e, por conta de tempo, não foi possível deixá-la totalmente flexível. Entretanto, retirando a interface gráfica do programa, o número máximo de computadores seria relativo à memória disponível.
