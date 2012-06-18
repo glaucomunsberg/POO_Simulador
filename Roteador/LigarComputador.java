@@ -20,7 +20,7 @@ public class LigarComputador extends Evento {
     }
     
     @Override
-    public void execucao(){
+    final public void execucao(){
         if(ipOriginem[0]+ipOriginem[1]+ipOriginem[2]+ipOriginem[3] == 0 || ipDestino[0]+ipDestino[1]+ipDestino[2]+ipDestino[3] == 0)
                 return;
         

@@ -20,7 +20,7 @@ public class Simulador extends JFrame {
     static private Color corCinza = Color.GRAY;
     static private Color corVerde = Color.GREEN;
     static private Color corAmarela = Color.YELLOW;
-    static private int velocidadeDaLed = 100;
+    static private int velocidadeDaLed = 1000;
 
                             
     

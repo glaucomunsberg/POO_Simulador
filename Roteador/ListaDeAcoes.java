@@ -61,7 +61,7 @@ public class ListaDeAcoes {
                         //Cria um evento para ligar o computador
                         if( "l".equals(argumentos[0]) )
                         {
-                            Evento temp = new Evento();
+                            Evento temp = new LigarComputador();
                             temp.setData(0.1);
                             
                             temp.setIpOrigem(new int[] {0,0,0,1});
@@ -79,7 +79,7 @@ public class ListaDeAcoes {
                             //Cria um evento que será para desligar o computador
                             if( "d".equals(argumentos[0]) )
                             {
-                                Evento temp = new Evento();
+                                Evento temp = new DesligarComputador();
                                 temp.setData(0.1);
                                 
                                 temp.setIpOrigem(new int[] {0,0,0,2});
@@ -96,7 +96,7 @@ public class ListaDeAcoes {
                             {
                                 if( "ping".equals(argumentos[0]) )
                                 {
-                                    Evento temp = new Evento();
+                                    Evento temp = new Ping();
                                     temp.setData(0.1);
                                     
                                     temp.setIpOrigem(new int[] {0,0,0,3});
@@ -118,7 +118,7 @@ public class ListaDeAcoes {
                      */
                     if(argumentos[0].length() >= 7 && argumentos[1].length() >= 7 )
                     {
-                        Evento temp = new Evento();
+                        Evento temp = new Pacote();
                         temp.setData(0.1);
                         temp.setDuracao(0.1);
                        
