@@ -3,6 +3,7 @@
  *  e evento quanto se trata de Mensagens e estatistica
  */
 
+package Roteador;
 import java.util.Random;
 import java.util.Scanner;
 
